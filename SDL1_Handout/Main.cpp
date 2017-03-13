@@ -55,7 +55,7 @@ int main()
 				else if (status == update_status::UPDATE_STOP)
 					state = MAIN_FINISH;
 
-			} break;
+			}	break;
 
 			// TODO 1: Implement case MAIN_FINISH
 			// Remember to quit the game with EXIT_SUCCESS

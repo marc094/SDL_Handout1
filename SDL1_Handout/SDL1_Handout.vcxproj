@@ -66,6 +66,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Dummy.h" />
+    <ClInclude Include="DummyESC.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="MemLeaks.h" />
     <ClInclude Include="Module.h" />
