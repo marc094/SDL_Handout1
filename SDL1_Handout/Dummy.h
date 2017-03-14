@@ -33,7 +33,6 @@ class ModuleDummy : public Module
 	bool CleanUp()
 	{
 		LOG("\nDummy CleanUp!");
-		delete this;
 		return true;
 	}
 };

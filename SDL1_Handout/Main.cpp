@@ -72,7 +72,7 @@ int main()
 				break;
 		}
 	}
-
+	delete App;
 	LOG("\nBye :)\n");
 	// TODO 6: Remove ALL memory leaks
 	return main_return;

@@ -38,7 +38,6 @@ class ModuleDummyESC : public Module
 	bool CleanUp()
 	{
 		LOG("\nDummyESC CleanUp!");
-		delete this;
 		return true;
 	}
 };

@@ -24,12 +24,17 @@ public:
 		// it should check if player hit ESC key use kbhit()
 		// http://www.cprogramming.com/fod/kbhit.html
 	}
+	
+	~Application() {
+		delete modules[0];
+		delete modules[1];
+	}
 
 	// INIT all modules
 	bool Init() 
 	{
 		bool ret_value = true;
-		for (int i = 0; i < NUM_MODULES; ++i)
+		for (int i = 0; i < NUM_MODULES && ret_value; ++i)
 			if (modules[i]->Init() == false)
 				ret_value = false;
 		
@@ -43,24 +48,22 @@ public:
 	// UPDATE all modules
 	// TODO 2: Make sure all modules receive its update
 	update_status Update() {
-		for (int i = 0; i < NUM_MODULES; ++i) {
-			update_status pre_update_status = modules[i]->PreUpdate();
-			if (pre_update_status == update_status::UPDATE_ERROR || pre_update_status == update_status::UPDATE_STOP)
-				return pre_update_status;
+
+		update_status status = update_status::UPDATE_CONTINUE;
+
+		for (int i = 0; i < NUM_MODULES && status == update_status::UPDATE_CONTINUE; ++i) {
+			status = modules[i]->PreUpdate();
 		}
 
-		for (int i = 0; i < NUM_MODULES; ++i) {
-			update_status update_stat = modules[i]->Update();
-			if (update_stat == update_status::UPDATE_ERROR || update_stat == update_status::UPDATE_STOP)
-				return update_stat;
+		for (int i = 0; i < NUM_MODULES && status == update_status::UPDATE_CONTINUE; ++i) {
+			status = modules[i]->Update();
 		}
 
-		for (int i = 0; i < NUM_MODULES; ++i) {
-			update_status post_update_status = modules[i]->PostUpdate();
-			if (post_update_status == update_status::UPDATE_ERROR || post_update_status == update_status::UPDATE_STOP)
-				return post_update_status;
+		for (int i = 0; i < NUM_MODULES && status == update_status::UPDATE_CONTINUE; ++i) {
+			status = modules[i]->PostUpdate();
 		}
-		return update_status::UPDATE_CONTINUE;
+
+		return status;
 	}
 
 	// EXIT Update 
@@ -72,7 +75,6 @@ public:
 			if (modules[i]->CleanUp() == false)
 				ret_value = false;
 
-		delete modules;
 		return ret_value;
 	}
 
